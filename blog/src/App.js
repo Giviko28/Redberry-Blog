@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   useEffect(() => {
     if (!token) {
       axiosClient.get("/token").then((response) => {
@@ -13,21 +14,48 @@ export default function App() {
     }
   }, []);
 
+  function handleShowLogin() {
+    setShowLogin((showLogin) => !showLogin);
+  }
+
   return (
     <div className="app">
-      <Header />
-      <Banner />
-      <ContentList />
+      <div style={showLogin ? { filter: "blur(0.125rem)" } : {}}>
+        <Header
+          showLogin={showLogin}
+          isLoggedIn={isLoggedIn}
+          onShowLogin={handleShowLogin}
+        />
+        <Banner />
+        <ContentList />
+      </div>
+      {showLogin && (
+        <Login
+          showLogin={showLogin}
+          onShowLogin={handleShowLogin}
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+        />
+      )}
     </div>
   );
 }
 
-function Header() {
+function Header({ isLoggedIn, onShowLogin }) {
   return (
     <header className="header">
       <img src={process.env.PUBLIC_URL + "/images/logo.svg"} alt="Logo" />
-      <button className="login-btn">შესვლა</button>
+      {!isLoggedIn && <LoginButton onClick={onShowLogin}>შესვლა</LoginButton>}
+      {isLoggedIn && <LoginButton>ბლოგის ატვირთვა</LoginButton>}
     </header>
+  );
+}
+
+function LoginButton({ children, onClick }) {
+  return (
+    <button onClick={onClick} className="login-btn">
+      {children}
+    </button>
   );
 }
 
@@ -41,10 +69,16 @@ function Banner() {
 }
 
 function ContentList() {
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    axiosClient.get("/blogs").then((response) => setBlogs(response.data));
+  }, []);
+
   return (
     <>
       <CategoryList />
-      <BlogsList />
+      <BlogsList blogs={blogs} />
     </>
   );
 }
@@ -86,8 +120,12 @@ function Category({ children, color, bgColor }) {
   );
 }
 
-function BlogsList() {
-  return <ul className="blog-list"></ul>;
+function BlogsList({ blogs }) {
+  return (
+    <ul className="blog-list">
+      {blogs.length && blogs.map((blog) => <Blog blog={blog} key={blog.id} />)}
+    </ul>
+  );
 }
 
 function Blog({ blog }) {
@@ -101,5 +139,59 @@ function Blog({ blog }) {
       <p></p>
       <button>სრულად ნახვა</button>
     </li>
+  );
+}
+
+function Login({ showLogin, isLoggedIn, setIsLoggedIn, onShowLogin }) {
+  const [email, setEmail] = useState("");
+  const [isInputInvalid, setIsInputInvalid] = useState(false);
+
+  function handleLogin(e) {
+    e.preventDefault();
+
+    if (!email) return;
+    if (showLogin && isLoggedIn) onShowLogin();
+
+    axiosClient
+      .post("/login", { email: email })
+      .then((response) => setIsLoggedIn(true))
+      .catch((error) => setIsInputInvalid(true));
+  }
+
+  return (
+    <form className="login" onSubmit={handleLogin}>
+      {!isLoggedIn && <h1>შესვლა</h1>}
+      {!isLoggedIn && (
+        <div className="email-input-container">
+          <p>ელ-ფოსტა</p>
+          <input
+            className={isInputInvalid ? "invalid-input" : "default-input"}
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Example@redberry.ge"
+          />
+          {isInputInvalid && (
+            <div className="invalid-input-info">
+              <img
+                src={process.env.PUBLIC_URL + "/images/info.svg"}
+                alt="Info icon"
+              />
+              ელ ფოსტა არ მოიძებნა
+            </div>
+          )}
+        </div>
+      )}
+      {isLoggedIn && (
+        <div className="login-success">
+          <img src={process.env.PUBLIC_URL + "/images/test.svg"} alt="" />
+          <h1>წარმატებული ავტორიზაცია</h1>
+        </div>
+      )}
+      <LoginButton>{isLoggedIn ? "კარგი" : "შესვლა"}</LoginButton>
+      <p onClick={onShowLogin} className="x-button">
+        &times;
+      </p>
+    </form>
   );
 }
