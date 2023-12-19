@@ -4,6 +4,7 @@ import Header from "../components/Home/Header";
 import Banner from "../components/Home/Banner";
 import ContentList from "../components/Home/ContentList";
 import Login from "../components/Home/Login";
+import "../css/Home.css";
 
 export default function Home({ isLoggedIn, setIsLoggedIn }) {
   const [token, setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
