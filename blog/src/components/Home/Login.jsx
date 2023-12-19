@@ -14,7 +14,10 @@ export default function Login({
   function handleLogin(e) {
     e.preventDefault();
 
-    if (!email) return;
+    if (!email) {
+      setIsInputInvalid(true);
+      return;
+    }
     if (showLogin && isLoggedIn) onShowLogin();
 
     axiosClient

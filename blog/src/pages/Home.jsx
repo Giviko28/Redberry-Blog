@@ -5,9 +5,8 @@ import Banner from "../components/Home/Banner";
 import ContentList from "../components/Home/ContentList";
 import Login from "../components/Home/Login";
 
-export default function Home() {
+export default function Home({ isLoggedIn, setIsLoggedIn }) {
   const [token, setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
