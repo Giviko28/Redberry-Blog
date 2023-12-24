@@ -1,6 +1,10 @@
-export default function LoginButton({ children, onClick }) {
+export default function LoginButton({ children, onClick, isDisabled }) {
   return (
-    <button onClick={onClick} className="login-btn">
+    <button
+      disabled={isDisabled}
+      onClick={onClick}
+      className={isDisabled ? "disabled-btn" : "login-btn"}
+    >
       {children}
     </button>
   );

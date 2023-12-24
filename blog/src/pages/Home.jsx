@@ -4,9 +4,8 @@ import Header from "../components/Home/Header";
 import Banner from "../components/Home/Banner";
 import ContentList from "../components/Home/ContentList";
 import Login from "../components/Home/Login";
-import "../css/Home.css";
 
-export default function Home({ isLoggedIn, setIsLoggedIn }) {
+export default function Home({ isLoggedIn, setIsLoggedIn, categories }) {
   const [token, setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
   const [showLogin, setShowLogin] = useState(false);
 
@@ -32,7 +31,7 @@ export default function Home({ isLoggedIn, setIsLoggedIn }) {
           onShowLogin={handleShowLogin}
         />
         <Banner />
-        <ContentList />
+        <ContentList categories={categories} />
       </div>
       {showLogin && (
         <Login

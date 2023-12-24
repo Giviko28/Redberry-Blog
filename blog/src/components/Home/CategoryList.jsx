@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 import axiosClient from "../../axios-client";
 import Category from "./Category";
 
-export default function CategoryList() {
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    axiosClient
-      .get("/categories")
-      .then((response) => setCategories(response?.data?.data));
-  }, []);
-
+export default function CategoryList({ categories }) {
   return (
     <div className="category-list-wrapper">
       <ul className="category-list">

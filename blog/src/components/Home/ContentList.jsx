@@ -3,7 +3,7 @@ import axiosClient from "../../axios-client";
 import BlogsList from "./BlogsList";
 import CategoryList from "./CategoryList";
 
-export default function ContentList() {
+export default function ContentList({ categories }) {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export default function ContentList() {
 
   return (
     <>
-      <CategoryList />
+      <CategoryList categories={categories} />
       <BlogsList blogs={blogs} />
     </>
   );

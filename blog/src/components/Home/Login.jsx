@@ -52,7 +52,17 @@ export default function Login({
       )}
       {isLoggedIn && (
         <div className="login-success">
-          <img src={process.env.PUBLIC_URL + "/images/test.svg"} alt="" />
+          <div>
+            <img
+              src={process.env.PUBLIC_URL + "/images/test.svg"}
+              alt="Green Circle"
+            />
+            <img
+              className="checkmark"
+              src={process.env.PUBLIC_URL + "/images/checkmark.svg"}
+              alt="Checkmark"
+            />
+          </div>
           <h1>წარმატებული ავტორიზაცია</h1>
         </div>
       )}
