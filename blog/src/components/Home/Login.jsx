@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axiosClient from "../../axios-client";
 import LoginButton from "./LoginButton";
+import SuccessMessage from "../SuccessMessage";
 
 export default function Login({
   showLogin,
@@ -29,50 +30,41 @@ export default function Login({
       .catch((error) => setIsInputInvalid(true));
   }
 
+  if (isLoggedIn) {
+    return (
+      <SuccessMessage
+        handleExit={onShowLogin}
+        onClick={onShowLogin}
+        buttonText="კარგი"
+      >
+        წარმატებული ავტორიზაცია
+      </SuccessMessage>
+    );
+  }
+
   return (
     <form className="login" onSubmit={handleLogin}>
-      {!isLoggedIn && <h1>შესვლა</h1>}
-      {!isLoggedIn && (
-        <div className="email-input-container">
-          <p>ელ-ფოსტა</p>
-          <input
-            className={isInputInvalid ? "invalid-input" : "default-input"}
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Example@redberry.ge"
-          />
-          {isInputInvalid && (
-            <div className="invalid-input-info">
-              <img
-                src={process.env.PUBLIC_URL + "/images/info.svg"}
-                alt="Info icon"
-              />
-              ელ ფოსტა არ მოიძებნა
-            </div>
-          )}
-        </div>
-      )}
-      {isLoggedIn && (
-        <div className="login-success">
-          <div>
+      <h1>შესვლა</h1>
+      <div className="email-input-container">
+        <p>ელ-ფოსტა</p>
+        <input
+          className={isInputInvalid ? "invalid-input" : "default-input"}
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Example@redberry.ge"
+        />
+        {isInputInvalid && (
+          <div className="invalid-input-info">
             <img
-              src={process.env.PUBLIC_URL + "/images/test.svg"}
-              alt="Green Circle"
+              src={process.env.PUBLIC_URL + "/images/info.svg"}
+              alt="Info icon"
             />
-            <img
-              className="checkmark"
-              src={process.env.PUBLIC_URL + "/images/checkmark.svg"}
-              alt="Checkmark"
-            />
+            ელ ფოსტა არ მოიძებნა
           </div>
-          <h1>წარმატებული ავტორიზაცია</h1>
-        </div>
-      )}
-      <LoginButton>{isLoggedIn ? "კარგი" : "შესვლა"}</LoginButton>
-      <p onClick={onShowLogin} className="x-button">
-        &times;
-      </p>
+        )}
+      </div>
+      <LoginButton>შესვლა</LoginButton>
     </form>
   );
 }

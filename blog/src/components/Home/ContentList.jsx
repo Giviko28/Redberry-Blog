@@ -22,7 +22,7 @@ export default function ContentList({ categories }) {
 
   function handleSelectCategory(category) {
     const isSelected = selectedCategories.find((c) => c.id === category.id);
-    // I'm copying the original selectedCategories array so I can save the current array to localStorage without losing a value
+    // I'm copying the original selectedCategories array, so I can save the current array to localStorage without losing the LAST value
     let tmpCategories = [...selectedCategories];
 
     if (!isSelected) tmpCategories = [...tmpCategories, category];
@@ -34,7 +34,16 @@ export default function ContentList({ categories }) {
   }
 
   useEffect(() => {
-    axiosClient.get("/blogs").then((response) => setBlogs(response.data.data));
+    axiosClient.get("/blogs").then((response) => {
+      const data = response.data.data;
+      // check the publication date for each blog
+      const blogsToPublish = data.filter((blog) => {
+        const currentDate = new Date();
+        const publishDate = new Date(blog.publish_date);
+        if (currentDate >= publishDate) return true;
+      });
+      setBlogs(blogsToPublish);
+    });
   }, []);
 
   return (

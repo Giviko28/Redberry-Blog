@@ -1,17 +1,37 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import LoginButton from "../components/Home/LoginButton";
 import { MultiSelect } from "primereact/multiselect";
 import { useState } from "react";
 import axiosClient from "../axios-client";
+import SuccessMessage from "../components/SuccessMessage";
 
 export default function BlogForm({ isLoggedIn, categories }) {
+  const [isBlogPosted, setIsBlogPosted] = useState(false);
+  const navigate = useNavigate();
+  const blur = { filter: "blur(0.125rem)" };
+
+  function handleClick() {
+    navigate("/");
+  }
+
   if (!isLoggedIn) return <Navigate to="/" />;
 
   return (
-    <div>
-      <Header />
-      <Form categories={categories} />
-    </div>
+    <>
+      {isBlogPosted && (
+        <SuccessMessage
+          onClick={handleClick}
+          handleExit={() => setIsBlogPosted(false)}
+          buttonText="მთავარ გვერდზე დაბრუნება"
+        >
+          ჩანაწერი წარმატებით დაემატა
+        </SuccessMessage>
+      )}
+      <div style={isBlogPosted ? blur : {}}>
+        <Header />
+        <Form setIsBlogPosted={setIsBlogPosted} categories={categories} />
+      </div>
+    </>
   );
 }
 
@@ -25,7 +45,7 @@ function Header() {
   );
 }
 
-function Form({ categories }) {
+function Form({ categories, setIsBlogPosted }) {
   const [image, setImage] = useState();
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [author, setAuthor] = useState("");
@@ -98,7 +118,9 @@ function Form({ categories }) {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((response) => console.log(response))
+      .then((response) => {
+        setIsBlogPosted(true);
+      })
       .catch((error) => console.error("Error uploading blog:", error));
   }
 
