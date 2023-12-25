@@ -1,13 +1,32 @@
+import Category from "./Category";
+import arrow from "../../images/topArrow.svg";
 export default function Blog({ blog }) {
   return (
     <li>
-      <img src="" alt="" />
-      <p>ავტორი</p>
-      <p>გამოქვეყნების თარიღი</p>
-      <p>ბლოგის სათაური</p>
-      <div>კატეგორიები</div>
-      <p></p>
-      <button>სრულად ნახვა</button>
+      <img src={blog.image} alt="Blog Image" />
+      <div className="blog-description">
+        <div>
+          <p className="author">{blog.author}</p>
+          <span className="publish-date">{blog.publish_date}</span>
+        </div>
+        <p className="title">{blog.title}</p>
+        <div className="categories">
+          {blog.categories.map((c) => (
+            <Category
+              key={c.id}
+              color={c.text_color}
+              bgColor={c.background_color}
+              padding="6px 10px"
+            >
+              {c.title}
+            </Category>
+          ))}
+        </div>
+        <div className="description">{blog.description}</div>
+        <p className="see-all">
+          სრულად ნახვა <img src={arrow} alt="Arrow icon" />
+        </p>
+      </div>
     </li>
   );
 }

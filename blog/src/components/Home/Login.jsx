@@ -22,7 +22,10 @@ export default function Login({
 
     axiosClient
       .post("/login", { email: email })
-      .then((response) => setIsLoggedIn(true))
+      .then((response) => {
+        setIsLoggedIn(true);
+        localStorage.setItem("IS_LOGGED_IN", "true");
+      })
       .catch((error) => setIsInputInvalid(true));
   }
 

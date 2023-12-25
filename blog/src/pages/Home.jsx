@@ -6,17 +6,7 @@ import ContentList from "../components/Home/ContentList";
 import Login from "../components/Home/Login";
 
 export default function Home({ isLoggedIn, setIsLoggedIn, categories }) {
-  const [token, setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
   const [showLogin, setShowLogin] = useState(false);
-
-  useEffect(() => {
-    if (!token) {
-      axiosClient.get("/token").then((response) => {
-        setToken(response.data.token);
-        localStorage.setItem("ACCESS_TOKEN", response.data.token);
-      });
-    }
-  }, []);
 
   function handleShowLogin() {
     setShowLogin((showLogin) => !showLogin);

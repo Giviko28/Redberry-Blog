@@ -6,10 +6,19 @@ import React from "react";
 import axiosClient from "./axios-client";
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("IS_LOGGED_IN") === "true",
+  );
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    if (!token) {
+      axiosClient.get("/token").then((response) => {
+        setToken(response.data.token);
+        localStorage.setItem("ACCESS_TOKEN", response.data.token);
+      });
+    }
     axiosClient
       .get("/categories")
       .then((response) => setCategories(response?.data?.data));
