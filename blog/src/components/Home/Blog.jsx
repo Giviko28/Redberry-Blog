@@ -3,14 +3,14 @@ import arrow from "../../images/topArrow.svg";
 import { Link } from "react-router-dom";
 export default function Blog({ blog }) {
   return (
-    <li>
+    <li className="blog">
       <img src={blog.image} alt="Blog Image" />
       <div className="blog-description">
         <div>
-          <p className="author">{blog.author}</p>
+          <p className="author ellipsis">{blog.author}</p>
           <span className="publish-date">{blog.publish_date}</span>
         </div>
-        <p className="title">{blog.title}</p>
+        <p className="title ellipsis">{blog.title}</p>
         <div className="categories">
           {blog.categories.map((c) => (
             <Category
@@ -23,7 +23,7 @@ export default function Blog({ blog }) {
             </Category>
           ))}
         </div>
-        <div className="description">{blog.description}</div>
+        <div className="description ellipsis">{blog.description}</div>
         <p className="see-all">
           <Link to={`/blog/${blog.id}`}>
             სრულად ნახვა

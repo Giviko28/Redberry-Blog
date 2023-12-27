@@ -4,7 +4,6 @@ import Header from "../components/Home/Header";
 import Banner from "../components/Home/Banner";
 import ContentList from "../components/Home/ContentList";
 import Login from "../components/Home/Login";
-import SuccessMessage from "../components/SuccessMessage";
 
 export default function Home({ isLoggedIn, setIsLoggedIn, categories, blogs }) {
   const [showLogin, setShowLogin] = useState(false);
