@@ -220,8 +220,31 @@ html, body {
 .form-contents input[type="file"] {
   display: none;
 }
+.image-div {
+  grid-column: 1 / -1;
+}
 .upload-image {
   grid-column: 1 / -1;
+}
+.uploaded-image {
+  background-color: #F2F2FA;
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}
+.uploaded-image > div {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.uploaded-image span {
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 .image-input {
   margin-top: 0.5rem;

@@ -1,5 +1,6 @@
 import Category from "./Category";
 import arrow from "../../images/topArrow.svg";
+import { Link } from "react-router-dom";
 export default function Blog({ blog }) {
   return (
     <li>
@@ -24,7 +25,10 @@ export default function Blog({ blog }) {
         </div>
         <div className="description">{blog.description}</div>
         <p className="see-all">
-          სრულად ნახვა <img src={arrow} alt="Arrow icon" />
+          <Link to={`/blog/${blog.id}`}>
+            სრულად ნახვა
+            <img src={arrow} alt="Arrow icon" />
+          </Link>
         </p>
       </div>
     </li>

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import axiosClient from "../../axios-client";
 import BlogsList from "./BlogsList";
 import CategoryList from "./CategoryList";
+import { getPosts } from "../../helper";
 
-export default function ContentList({ categories }) {
-  const [blogs, setBlogs] = useState([]);
+export default function ContentList({ categories, blogs }) {
   const [selectedCategories, setSelectedCategories] = useState(
     JSON.parse(localStorage.getItem("SELECTED_CATEGORIES")) ?? [],
   );
@@ -32,19 +31,6 @@ export default function ContentList({ categories }) {
     localStorage.setItem("SELECTED_CATEGORIES", JSON.stringify(tmpCategories));
     setSelectedCategories(tmpCategories);
   }
-
-  useEffect(() => {
-    axiosClient.get("/blogs").then((response) => {
-      const data = response.data.data;
-      // check the publication date for each blog
-      const blogsToPublish = data.filter((blog) => {
-        const currentDate = new Date();
-        const publishDate = new Date(blog.publish_date);
-        if (currentDate >= publishDate) return true;
-      });
-      setBlogs(blogsToPublish);
-    });
-  }, []);
 
   return (
     <>

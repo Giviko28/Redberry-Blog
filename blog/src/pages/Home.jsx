@@ -6,7 +6,7 @@ import ContentList from "../components/Home/ContentList";
 import Login from "../components/Home/Login";
 import SuccessMessage from "../components/SuccessMessage";
 
-export default function Home({ isLoggedIn, setIsLoggedIn, categories }) {
+export default function Home({ isLoggedIn, setIsLoggedIn, categories, blogs }) {
   const [showLogin, setShowLogin] = useState(false);
 
   function handleShowLogin() {
@@ -22,7 +22,7 @@ export default function Home({ isLoggedIn, setIsLoggedIn, categories }) {
           onShowLogin={handleShowLogin}
         />
         <Banner />
-        <ContentList categories={categories} />
+        <ContentList blogs={blogs} categories={categories} />
       </div>
       {showLogin && (
         <Login

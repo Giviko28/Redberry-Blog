@@ -4,13 +4,15 @@ import { MultiSelect } from "primereact/multiselect";
 import { useState } from "react";
 import axiosClient from "../axios-client";
 import SuccessMessage from "../components/SuccessMessage";
+import imageIcon from "../images/picture.svg";
 
-export default function BlogForm({ isLoggedIn, categories }) {
+export default function BlogForm({ isLoggedIn, categories, forceRefresh }) {
   const [isBlogPosted, setIsBlogPosted] = useState(false);
   const navigate = useNavigate();
   const blur = { filter: "blur(0.125rem)" };
 
   function handleClick() {
+    forceRefresh();
     navigate("/");
   }
 
@@ -160,49 +162,74 @@ function Form({ categories, setIsBlogPosted }) {
     <div className="form">
       <h1>ბლოგის დამატება</h1>
       <div className="form-contents">
-        <div className="upload-image">
+        <div className="image-div">
           <p>ატვირთეთ ფოტო</p>
-          <label className="image-input" onDrop={() => alert("yo")}>
-            <img src={process.env.PUBLIC_URL + "/images/image.svg"} alt="" />
-            <p>
-              {" "}
-              ჩააგდეთ ფაილი აქ ან <u>აირჩიეთ ფაილი</u>
-            </p>
-            <input onChange={(e) => setImage(e.target.files[0])} type="file" />
-          </label>
+          {image && (
+            <div className="uploaded-image">
+              <div>
+                <img src={imageIcon} alt="Image icon" />
+                <p>{image.name}</p>
+              </div>
+              <span onClick={() => setImage(false)}>&times;</span>
+            </div>
+          )}
+          {!image && (
+            <div className="upload-image">
+              <label className="image-input">
+                <img
+                  src={process.env.PUBLIC_URL + "/images/image.svg"}
+                  alt=""
+                />
+                <p>
+                  {" "}
+                  ჩააგდეთ ფაილი აქ ან <u>აირჩიეთ ფაილი</u>
+                </p>
+                <input
+                  onChange={(e) => setImage(e.target.files[0])}
+                  type="file"
+                />
+              </label>
+            </div>
+          )}
         </div>
-        <Input
-          value={author}
-          onChange={(e) => setAuthor(e.target.value.trimStart())}
-          title="ავტორი"
-          isRequired={true}
-          isValid={author ? isAuthorValid : true}
-          placeholder="შეიყვანეთ ავტორი"
-        >
-          <ListItem value={author} condition={isAuthorSizeValid}>
-            მინიმუმ 4 სიმბოლო
-          </ListItem>
-          <ListItem value={author} condition={isTwoWords}>
-            მინიმუმ 2 სიტყვა
-          </ListItem>
-          <ListItem value={author} condition={isGeorgianAlphabet}>
-            მხოლოდ ქართული სიმბოლოები
-          </ListItem>
-        </Input>
-        <Input
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value.trimStart());
-          }}
-          isValid={title ? isTitleTwoSymbols : true}
-          title="სათაური"
-          isRequired={true}
-          placeholder="შეიყვანეთ ავტორი"
-        >
-          <ListItem value={title} condition={isTitleTwoSymbols}>
-            მინიმუმ 2 სიმბოლო
-          </ListItem>
-        </Input>
+        {/* Author Input */}
+        <>
+          <Input
+            value={author}
+            onChange={(e) => setAuthor(e.target.value.trimStart())}
+            title="ავტორი"
+            isRequired={true}
+            isValid={author ? isAuthorValid : true}
+            placeholder="შეიყვანეთ ავტორი"
+          >
+            <ListItem value={author} condition={isAuthorSizeValid}>
+              მინიმუმ 4 სიმბოლო
+            </ListItem>
+            <ListItem value={author} condition={isTwoWords}>
+              მინიმუმ 2 სიტყვა
+            </ListItem>
+            <ListItem value={author} condition={isGeorgianAlphabet}>
+              მხოლოდ ქართული სიმბოლოები
+            </ListItem>
+          </Input>
+        </>
+        {/* Title Input */}
+        <>
+          <Input
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value.trimStart());
+            }}
+            isValid={title ? isTitleTwoSymbols : true}
+            title="სათაური"
+            isRequired={true}
+            placeholder="შეიყვანეთ ავტორი"
+          >
+            <ListItem value={title} condition={isTitleTwoSymbols}>
+              მინიმუმ 2 სიმბოლო
+            </ListItem>
+          </Input>
+        </>
         <div className="textarea-div">
           <p>აღწერა*</p>
           <textarea
@@ -221,16 +248,19 @@ function Form({ categories, setIsBlogPosted }) {
             მინიმუმ 4 სიმბოლო
           </ListItem>
         </div>
-        <Input
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          isValid={date}
-          type="date"
-          className="input-margin"
-          title="გამოქვეყნების თარიღი"
-          isRequired={true}
-          placeholder="შეიყვანეთ სათაური"
-        />
+        {/* Release date input */}
+        <>
+          <Input
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            isValid={date}
+            type="date"
+            className="input-margin"
+            title="გამოქვეყნების თარიღი"
+            isRequired={true}
+            placeholder="შეიყვანეთ სათაური"
+          />
+        </>
         <div className="input-div input-margin">
           <p>კატეგორია</p>
           <MultiSelect
@@ -244,14 +274,17 @@ function Form({ categories, setIsBlogPosted }) {
             optionValue="id"
           />
         </div>
-        <Input
-          title="ელ-ფოსტა"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          isValid={isValidEmail}
-          type="email"
-          placeholder="Example@redberry.ge"
-        />
+        {/* Multiselect category Input */}
+        <>
+          <Input
+            title="ელ-ფოსტა"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            isValid={isValidEmail}
+            type="email"
+            placeholder="Example@redberry.ge"
+          />
+        </>
       </div>
       <div className="btn-wrapper">
         <LoginButton onClick={handleForm} isDisabled={!isFormValid}>
