@@ -1,4 +1,4 @@
-@import url('https://free.bboxtype.com/embedfonts/?family=FiraGO:700');
+@import url('https://free.bboxtype.com/embedfonts/?family=FiraGO:400,500,700,900');
 * {
   margin: 0;
   padding: 0;
@@ -73,6 +73,7 @@ html, body {
   padding: 0.5rem 1rem;
   cursor: pointer;
   white-space: nowrap;
+  font-weight: 500
 }
 .login {
   padding: 2.5rem 1.5rem;
@@ -171,6 +172,10 @@ html, body {
   padding: 0.75rem 0.5rem;
   border-radius: 0.75rem;
 }
+.default-input::placeholder {
+  font-size: 0.875rem;
+  padding-left: 0.25rem;
+}
 .default-input:focus {
   outline: #5D37F3;
   border: 2px solid #5D37F3;
@@ -232,6 +237,12 @@ html, body {
 .image-div {
   grid-column: 1 / -1;
 }
+.image-div > p {
+  font-weight: 500;
+}
+.image-div p u {
+  font-weight: 500;
+}
 .upload-image {
   grid-column: 1 / -1;
 }
@@ -285,6 +296,10 @@ html, body {
 .input-div > * {
   width: 90%;
 }
+.input-div p {
+  font-weight: 500;
+  color:#1A1A1F;
+}
 .input-div ul {
   margin-left: 1.25rem;
   line-height: 1.25rem;
@@ -301,6 +316,10 @@ html, body {
   flex-direction: column;
   gap: 0.5rem;
   margin-top: 1rem;
+}
+.textarea-div p {
+  color: #1A1A1F;
+  font-weight: 500;
 }
 .textarea-div li {
   line-height: 1.25rem;
@@ -319,6 +338,11 @@ html, body {
 }
 .valid-textarea {
   border: 1px solid #14D81C;
+  outline: #14D81C;
+}
+.valid-textarea:focus {
+  outline: #14D81C;
+  border: 1px solid #14D81C;
 }
 .invalid-textarea {
   border: 1px solid #EA1919;
@@ -332,6 +356,11 @@ html, body {
   overflow: hidden;
   align-items: center;
   background-color: white;
+}
+.p-placeholder {
+  font-size: 14px;
+  color: #85858D;
+  margin: 0 0.25rem
 }
 .p-multiselect-panel {
   background-color: white;
@@ -356,7 +385,7 @@ html, body {
   place-items: center;
   width: 100%;
   padding-top: 3rem;
-  gap: 1rem;
+  gap: 4rem;
 }
 .empty-message {
   margin-top: 1rem;
@@ -365,7 +394,6 @@ html, body {
 .blog {
   list-style: none;
   width: 408px;
-  height: 620px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -379,9 +407,10 @@ html, body {
 .blog .blog-description {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 .blog .author {
+  font-weight: 500;
   line-height: 1.5rem;
   color: #1A1A1F;
 }
@@ -393,6 +422,7 @@ html, body {
   color: #1A1A1F;
   font-size: 1.25rem;
   line-height: 1.75rem;
+  font-weight: 500;
 }
 .blog .categories {
 }
@@ -410,6 +440,7 @@ html, body {
   color: #5D37F3;
   font-size: 0.875rem;
   line-height: 1.25rem;
+  font-weight: 500;
 }
 .blog .see-all img  {
   height: 20px;
@@ -430,6 +461,7 @@ html, body {
   object-fit: cover;
   height: 328px;
   width: 720px;
+  border-radius: 0.75rem;
 }
 .blogpost > div {
   display: flex;
@@ -441,17 +473,22 @@ html, body {
   flex-direction: column;
   gap: 0.25rem;
 }
+.blogpost-author-div > p {
+  font-weight: 500;
+}
 .blogpost-date {
   font-size: 0.75rem;
   color: #85858D;
 }
 .blogpost-title {
+  font-weight: 700;
   font-size: 2rem;
   line-height: 2.5rem;
   color: #1A1A1F;
 }
 .blogpost-description {
   color: #404049;
+  line-height: 1.75rem;
 }
 .blogpost-categories {
   display: flex;
@@ -490,4 +527,12 @@ html, body {
 }
 .slick-arrow {
   display: none !important;
+}
+.go-back {
+  position: absolute;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  top: 120px;
+  left: 76px;
 }

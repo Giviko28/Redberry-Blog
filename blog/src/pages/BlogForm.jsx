@@ -5,6 +5,7 @@ import { useState } from "react";
 import axiosClient from "../axios-client";
 import SuccessMessage from "../components/SuccessMessage";
 import imageIcon from "../images/picture.svg";
+import BackButton from "../components/BackButton";
 
 export default function BlogForm({ isLoggedIn, categories, forceRefresh }) {
   const [isBlogPosted, setIsBlogPosted] = useState(false);
@@ -20,6 +21,7 @@ export default function BlogForm({ isLoggedIn, categories, forceRefresh }) {
 
   return (
     <>
+      <BackButton />
       {isBlogPosted && (
         <SuccessMessage
           onClick={handleClick}
@@ -148,6 +150,7 @@ function Form({ categories, setIsBlogPosted }) {
         style={{
           color: category.text_color,
           backgroundColor: category.background_color,
+          fontWeight: "500",
         }}
       >
         <div>
@@ -262,12 +265,12 @@ function Form({ categories, setIsBlogPosted }) {
           />
         </>
         <div className="input-div input-margin">
-          <p>კატეგორია</p>
+          <p>კატეგორია*</p>
           <MultiSelect
             className={isCategoriesValid ? "valid-input" : "default-input"}
             value={selectedCategories}
             onChange={(e) => setSelectedCategories(e.value)}
-            placeholder="შეიყვანეთ სათაური"
+            placeholder="აირჩიეთ კატეგორია"
             options={categories}
             selectedItemTemplate={selectedItemTemplate}
             optionLabel="title"

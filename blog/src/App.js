@@ -1,5 +1,11 @@
 import Home from "./pages/Home";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import BlogForm from "./pages/BlogForm";
 import React from "react";
@@ -10,7 +16,6 @@ import { filterBlogsByDate } from "./helper";
 
 export default function App() {
   const [refreshFlag, setRefreshFlag] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("IS_LOGGED_IN") === "true",
   );
@@ -22,12 +27,6 @@ export default function App() {
   );
 
   useEffect(() => {
-    if (!token) {
-      axiosClient.get("/token").then((response) => {
-        setToken(response.data.token);
-        localStorage.setItem("ACCESS_TOKEN", response.data.token);
-      });
-    }
     getCategories(setCategories);
     getPosts(setBlogs);
   }, [refreshFlag]);

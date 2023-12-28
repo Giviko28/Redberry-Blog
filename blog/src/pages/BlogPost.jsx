@@ -6,6 +6,7 @@ import Category from "../components/Home/Category";
 import Blog from "../components/Home/Blog";
 import arrowR from "../images/rightArrow.svg";
 import Slider from "react-slick";
+import BackButton from "../components/BackButton";
 
 export default function BlogPost({ isLoggedIn, setIsLoggedIn, blogs }) {
   const [showLogin, setShowLogin] = useState(false);
@@ -16,6 +17,8 @@ export default function BlogPost({ isLoggedIn, setIsLoggedIn, blogs }) {
 
   const curBlog = blogs.find((b) => Number(b.id) === Number(id));
 
+  if (!curBlog) return <Navigate to="/" />;
+
   const similarBlogs = blogs.filter((blog) =>
     blog.categories.some((blogCategory) =>
       curBlog.categories.some(
@@ -24,14 +27,13 @@ export default function BlogPost({ isLoggedIn, setIsLoggedIn, blogs }) {
     ),
   );
 
-  if (!curBlog) return <Navigate to="/" />;
-
   function handleShowLogin() {
     setShowLogin((showLogin) => !showLogin);
   }
 
   return (
     <>
+      <BackButton />
       {showLogin && (
         <Login
           showLogin={showLogin}
