@@ -1,15 +1,8 @@
 import Home from "./pages/Home";
-import {
-  BrowserRouter,
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import BlogForm from "./pages/BlogForm";
 import React from "react";
-import axiosClient from "./axios-client";
 import BlogPost from "./pages/BlogPost";
 import { getCategories, getPosts } from "./helper";
 import { filterBlogsByDate } from "./helper";
