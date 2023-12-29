@@ -7,17 +7,19 @@ export default function ContentList({ categories, blogs }) {
   const [selectedCategories, setSelectedCategories] = useState(
     JSON.parse(localStorage.getItem("SELECTED_CATEGORIES")) ?? [],
   );
-
-  const blogsToDisplay =
-    selectedCategories.length > 0
-      ? blogs.filter((blog) =>
-          blog.categories.some((blogCategory) =>
-            selectedCategories.some(
-              (selectedCategory) => selectedCategory.id === blogCategory.id,
-            ),
-          ),
-        )
-      : blogs;
+  let blogsToDisplay = [];
+  if (blogs) {
+    blogsToDisplay =
+      selectedCategories.length > 0
+          ? blogs.filter((blog) =>
+              blog.categories.some((blogCategory) =>
+                  selectedCategories.some(
+                      (selectedCategory) => selectedCategory.id === blogCategory.id,
+                  ),
+              ),
+          )
+          : blogs;
+  }
 
   function handleSelectCategory(category) {
     const isSelected = selectedCategories.find((c) => c.id === category.id);

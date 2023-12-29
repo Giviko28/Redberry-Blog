@@ -13,7 +13,7 @@ export default function CustomCarousel({ blogs }) {
     };
 
     return (
-        <div className="carousel-div">
+        <div className="carousel-div slide-in-from-bottom">
             <div className="carousel-div-nav">
                 <h1>მსგავსი სტატიები</h1>
                 <div className="carousel-arrows">

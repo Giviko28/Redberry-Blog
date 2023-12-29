@@ -5,7 +5,7 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer dd1c6c51ab797332ea47d067e3d5f9f16e09348463e3da1aa671dff175a64a25`;
+  config.headers.Authorization = `Bearer 25c734db50db4f002f293b860b85639ea5e85504ea277286004eedf0a7415858`;
   return config;
 });
 

@@ -134,7 +134,7 @@ export default function Form({ categories, setIsBlogPosted }) {
 
 
   return (
-    <div className="form">
+    <div className="form slide-in">
       <h1>ბლოგის დამატება</h1>
       <div className="form-contents">
         <div className="image-div">

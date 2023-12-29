@@ -5,7 +5,7 @@ import CustomCarousel from "./CustomCarousel";
 export default function Content({ blogs, blog }) {
     return (
         <div className="content">
-            <div className="blogpost">
+            <div className="blogpost slide-in">
                 <img className="blogpost-image" src={blog.image} alt="Blog Image" />
                 <div>
                     <div className="blogpost-author-div">
