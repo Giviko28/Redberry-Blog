@@ -1,6 +1,8 @@
 import React from "react";
 import LoginButton from "./Home/LoginButton";
-
+import CloseButton from "./CloseButton";
+import Checkmark from "../images/checkmark.svg"
+import GreenCircle from "../images/greenCircle.svg"
 export default function SuccessMessage({
   children,
   onClick,
@@ -13,12 +15,12 @@ export default function SuccessMessage({
         <div className="image-wrapper">
           <img
             className="green-circle"
-            src={process.env.PUBLIC_URL + "/images/test.svg"}
+            src={GreenCircle}
             alt="Green Circle"
           />
           <img
             className="checkmark"
-            src={process.env.PUBLIC_URL + "/images/checkmark.svg"}
+            src={Checkmark}
             alt="Checkmark"
           />
         </div>
@@ -29,9 +31,7 @@ export default function SuccessMessage({
         {buttonText}
       </LoginButton>
 
-      <p onClick={handleExit} className="x-button">
-        &times;
-      </p>
+        <CloseButton onClick={handleExit} />
     </div>
   );
 }

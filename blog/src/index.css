@@ -536,3 +536,19 @@ html, body {
   top: 120px;
   left: 76px;
 }
+.close-button {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.email-error {
+  display: flex;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  align-items: flex-start;
+  color: #EA1919;
+}

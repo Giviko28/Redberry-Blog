@@ -2,7 +2,8 @@ import { useState } from "react";
 import axiosClient from "../../axios-client";
 import LoginButton from "./LoginButton";
 import SuccessMessage from "../SuccessMessage";
-
+import CloseButton from "../CloseButton";
+import info from "../../images/red-info.svg"
 export default function Login({
   showLogin,
   isLoggedIn,
@@ -44,6 +45,7 @@ export default function Login({
 
   return (
     <form className="login" onSubmit={handleLogin}>
+      <CloseButton onClick={onShowLogin} />
       <h1>შესვლა</h1>
       <div className="email-input-container">
         <p>ელ-ფოსტა</p>
@@ -57,7 +59,7 @@ export default function Login({
         {isInputInvalid && (
           <div className="invalid-input-info">
             <img
-              src={process.env.PUBLIC_URL + "/images/info.svg"}
+              src={info}
               alt="Info icon"
             />
             ელ ფოსტა არ მოიძებნა

@@ -1,10 +1,9 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import LoginButton from "../components/Home/LoginButton";
-import { MultiSelect } from "primereact/multiselect";
+import {Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Form from "../components/BlogForm/Form";
 import SuccessMessage from "../components/SuccessMessage";
 import BackButton from "../components/BackButton";
+import Header from "../components/BlogForm/Header";
 
 export default function BlogForm({ isLoggedIn, categories, forceRefresh }) {
   const [isBlogPosted, setIsBlogPosted] = useState(false);
@@ -35,15 +34,5 @@ export default function BlogForm({ isLoggedIn, categories, forceRefresh }) {
         <Form setIsBlogPosted={setIsBlogPosted} categories={categories} />
       </div>
     </>
-  );
-}
-
-function Header() {
-  return (
-    <header className="blogform-header">
-      <Link to="/">
-        <img src={process.env.PUBLIC_URL + "/images/logo.svg"} alt="" />
-      </Link>
-    </header>
   );
 }

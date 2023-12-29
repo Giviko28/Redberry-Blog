@@ -1,8 +1,9 @@
+import banner from "../../images/banner.svg"
 export default function Banner() {
   return (
     <div className="banner">
       <h1>ბლოგი</h1>
-      <img src={process.env.PUBLIC_URL + "/images/banner.svg"} alt="Banner" />
+      <img src={banner} alt="Banner" />
     </div>
   );
 }
